@@ -8,6 +8,7 @@ function App() {
   const[score,setScore] = useState(0);
   const[bestScore, setBestScore] = useState(0);
   const [clickedCards, setClickedCards] = useState([]);
+  const [isLocked, setIsLocked] = useState(false);
  
   async function fetchPokemon() {
     const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
@@ -28,9 +29,12 @@ function App() {
     fetchPokemon();
   },[]);
   function handleClick(id) {
+    if(isLocked) return;
     if(clickedCards.includes(id)) {
       setScore(0);
       setClickedCards([]);
+      shuffleCards();
+      setTimeout(()=> setIsLocked(false), 300);
       return;
     }
     setClickedCards[prev => [...prev, id]];
@@ -41,6 +45,7 @@ function App() {
     })
   
     shuffleCards();
+    setTimeout(()=> setIsLocked(false),300);
   }
   function shuffleCards() {
     const shuffled = [...cards].sort(()=> Math.random()-0.5);
