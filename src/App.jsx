@@ -43,7 +43,7 @@ function App() {
       setTimeout(() => {
         setGameOver(false);
         setIsLocked(false);
-      }, 700);
+      }, 1000);
       return;
     }
     setClickedCards((prev) => [...prev, id]);
@@ -60,14 +60,29 @@ function App() {
     const shuffled = [...cards].sort(() => Math.random() - 0.5);
     setCards(shuffled);
   }
-  return (
-    <div className="app">
-      <h1> Memory Game</h1>
-      <Scoreboard score={score} bestScore={bestScore} />
-      <CardGrid cards={cards} handleClick={handleClick} />
-      {gameOver && <h2>Game Over! Try Again 🔁 </h2>}
-    </div>
-  );
+ return (
+  <div className="app">
+    <header className="header">
+      <h1>🧠 Pokémon Memory Game</h1>
+
+      <Scoreboard
+        score={score}
+        bestScore={bestScore}
+      />
+    </header>
+
+    {gameOver && (
+      <div className="game-over">
+        <h2>Game Over! Try Again 🔁</h2>
+      </div>
+    )}
+
+    <CardGrid
+      cards={cards}
+      handleClick={handleClick}
+    />
+  </div>
+);
 }
 
 export default App;
